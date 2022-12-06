@@ -61,3 +61,18 @@ textarea:focus, input:focus, select:focus {
 *[placeholder] {
   color: #0E5AE5 !important;
 }
+
+/* AJOUT POUR LES ERREURS*/
+.required_extension {
+  display: none;
+}
+
+.required_extension[error="true"] {
+  display: block;
+  color: red;
+}
+
+.error {
+  display: block;
+  color: red;
+}

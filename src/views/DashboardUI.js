@@ -30,7 +30,7 @@ export default ({ data, loading, error }) => {
               <span class='arrow-icon' id='arrow-icon2' data-testid='arrow-icon2'>${ArrowIcon}</span>
             </div>
             <div class='status-bills-container' id='status-bills-container2'>
-            </div>
+            </div> 
 
             <div class='status-bills-header' style='margin-top: 20px;'>
               <h3> Refusé (${filteredBills(data && data.bills, "refused").length}) </h3>

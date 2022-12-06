@@ -56,10 +56,12 @@ export default () => {
                   <div class="col-half">
                     <label for="file" class="bold-label">Justificatif</label>
                     <input required type="file" class="form-control blue-border" data-testid="file" />
-                  </div>
+                    <!--ajout d'un label pour message erreur-->
+                    <label id="required_extension" class="required_extension">Extension requise : png, jpg ou jpeg</label>
+                    </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row"> 
               <div class="col-md-6">
                 <div class="col-half">
                   <button type="submit" id='btn-send-bill' class="btn btn-primary">Envoyer</button>

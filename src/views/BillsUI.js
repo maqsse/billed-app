@@ -49,7 +49,7 @@ export default ({ data: bills, loading, error }) => {
   }
   
   return (`
-    <div class='layout'>
+    <div class='layout'>  
       ${VerticalLayout(120)}
       <div class='content'>
         <div class='content-header'>
