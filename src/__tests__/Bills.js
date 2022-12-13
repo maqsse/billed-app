@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
- import { waitFor, screen } from "@testing-library/dom"
+ import { waitFor, screen, fireEvent } from "@testing-library/dom"
  import userEvent from '@testing-library/user-event'
 import BillsUI from "../views/BillsUI.js";
 import { bills } from "../fixtures/bills.js";
@@ -46,21 +46,37 @@ const iconActivated = windowIcon.classList.contains('active-icon')
  
 
 // ajout de tests unitaires 
-test("Then all open bill icons should display modal when you click on it", () => {
-    window.localStorage.setItem( "user", JSON.stringify({type: "Employee"}) );
-    const html = BillsUI({ data: bills })
-    document.body.innerHTML = html
-    const currentBills = new Bills ({ document, onNavigate, store: store, localStorage: window.localStorage })
+// Quand on clique sur l'icone de l'oeil on affiche la modale
+describe("When I am on Bills Page and I click on the icon eye", () => {
+    test("Then it should open the modal", () => {
+        // page bills
+        const html = BillsUI({
+            data: bills
+        });
+        document.body.innerHTML = html;
+        // initialisation bills
+        const store = null;
+        const onNavigate = (pathname) => {
+            document.body.innerHTML = ROUTES({ pathname });
+        };
+        const billsList = new Bills({ document, onNavigate, store, localStorage: window.localStorage, });
+        // simulation modale
+        $.fn.modal = jest.fn();
+        const icon = screen.getAllByTestId('icon-eye')[0];
+        const handleClickIconEye = jest.fn(() =>
+            billsList.handleClickIconEye(icon)
+        );
+        icon.addEventListener('click', handleClickIconEye);
+        // déclenchement de l'événement
+        fireEvent.click(icon);
+        expect(handleClickIconEye).toHaveBeenCalled();
+        const modale = document.getElementById('modaleFile');
+        expect(modale).toBeTruthy();
+    })
+})
 
-    $.fn.modal = jest.fn();
-    const spyModal = jest.spyOn($.fn, "modal")
 
-
-    const eyeIcons = screen.getAllByTestId("icon-eye")
-    eyeIcons.map(eyeIcon => { userEvent.click(eyeIcon) })
-    expect(spyModal).toHaveBeenCalledTimes(4)
-  })
-
+// Quand on clique sur "nouvelle note de frais" on a le formulaire
   test("Then adding a new bill should load newbill page", () => {
     window.localStorage.setItem( "user", JSON.stringify({type: "Employee"}) );
     const html = BillsUI({ data: bills })
@@ -78,9 +94,6 @@ test("Then all open bill icons should display modal when you click on it", () =>
   })
 })
 })
-
-
-
 // test d'intégration GET
 describe("Given I am a user connected as Employee", () => {
     describe("When I navigate to Bills page", () => {
@@ -122,14 +135,14 @@ describe("Given I am a user connected as Employee", () => {
         test("fetches bills from an API and fails with 404 message error", async() => {
             const html = BillsUI({ error: 'Erreur 404' })
             document.body.innerHTML = html;
-            const message = await screen.getByText(/Erreur 404/);
+            const message = screen.getByText(/Erreur 404/);
             expect(message).toBeTruthy();
         })
 
         test("fetches messages from an API and fails with 500 message error", async() => {
             const html = BillsUI({ error: 'Erreur 500' })
             document.body.innerHTML = html;
-            const message = await screen.getByText(/Erreur 500/);
+            const message = screen.getByText(/Erreur 500/);
             expect(message).toBeTruthy();
         })
     })
