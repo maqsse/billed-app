@@ -6,7 +6,7 @@ import { fireEvent, screen } from "@testing-library/dom"
 import BillsUI from "../views/BillsUI.js";
 import NewBillUI from "../views/NewBillUI.js"
 import NewBill from "../containers/NewBill.js"
-import { ROUTES_PATH, ROUTES } from "../constants/routes.js";
+import { ROUTES } from "../constants/routes.js";
 import userEvent from '@testing-library/user-event'
 
 
@@ -29,6 +29,7 @@ describe("Given I am connected as an employee", () => {
       const isBills = screen.getByText(/Mes notes de frais/)
       expect(isBills).toBeTruthy()
     })
+    
     test("Then adding a file to the form should call the api", async() => {
       window.localStorage.setItem( "user", JSON.stringify({type: "Employee"}) );
       const html = NewBillUI()
@@ -66,7 +67,7 @@ describe("Given I am a user connected as Employee", () => {
                   datepicker: '2021-05-26',
                   amount: '100',
                   vat: '10',
-                  pct: '19',
+                  pct: '19', 
                   commentary: 'Test',
                   file: new File(['test'], 'test.png', { type: 'image/png' }),
               }
