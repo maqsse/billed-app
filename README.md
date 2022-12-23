@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 ## L'architecture du projet :
 Ce projet, dit frontend, est connecté à un service API backend que vous devez aussi lancer en local.
@@ -92,3 +93,6 @@ mot de passe : admin
 utilisateur : employee@test.tld
 mot de passe : employee
 ```
+=======
+# bill-app2
+>>>>>>> 56fd5bbacf240715969b095bdd47a4be8da02e66
